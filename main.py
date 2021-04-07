@@ -1,10 +1,14 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, Email, Length
+
+
 import util.logging
 from util.logging import log_decorator
 import util.network
 import util.params
+
 import logging
 
 logger = logging.getLogger(__name__)
@@ -20,15 +24,17 @@ def home():
 
 
 class LoginForm(FlaskForm):
-    name = StringField(label='email')
-    password = PasswordField(label='password')
+    name = StringField(label='email', validators=[DataRequired()])
+    password = PasswordField(label='password', validators=[DataRequired(), Length(min=8)])
+    email = StringField(label='email', validators=[Email()])
     submit = SubmitField(label='Log In')
 
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 @log_decorator
 def login():
     form = LoginForm()
+    form.validate_on_submit()
     return render_template('login.html', form=form)
 
 
