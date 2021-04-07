@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, PasswordField, SubmitField
 import util.logging
 from util.logging import log_decorator
 import util.network
@@ -19,15 +19,16 @@ def home():
     return render_template('index.html')
 
 
-class MyForm(FlaskForm):
-    name = StringField('email')
-    password = StringField('password')
+class LoginForm(FlaskForm):
+    name = StringField(label='email')
+    password = PasswordField(label='password')
+    submit = SubmitField(label='Log In')
 
 
 @app.route("/login")
 @log_decorator
 def login():
-    form = MyForm()
+    form = LoginForm()
     return render_template('login.html', form=form)
 
 
