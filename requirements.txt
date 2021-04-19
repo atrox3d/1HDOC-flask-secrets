@@ -1,4 +1,5 @@
 flask
 flask_wtf
 wtforms
+email_validator
 

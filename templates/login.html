@@ -8,6 +8,17 @@
         <div class="container">
 		<h1>Login</h1>
         <!-- This is where our form will go. -->
+        <!-------------------------------------------------------------------------------
+            the form object is created in main.py:
+            class LoginForm(FlaskForm):
+                name = StringField(label='name', validators=[DataRequired()])
+                password = PasswordField(label='password', validators=[DataRequired(), Length(min=8)])
+                email = StringField(
+                    label='email',
+                    # validators=[Email()]
+                )
+                submit = SubmitField(label='Log In')
+        ------------------------------------------------------------------------------->
             <form method="post" action="{{ url_for('login') }}" novalidate>
                 {{ form.csrf_token }}
                 <p>

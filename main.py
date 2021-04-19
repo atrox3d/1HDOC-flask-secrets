@@ -28,7 +28,10 @@ def home():
 class LoginForm(FlaskForm):
     name = StringField(label='name', validators=[DataRequired()])
     password = PasswordField(label='password', validators=[DataRequired(), Length(min=8)])
-    email = StringField(label='email', validators=[Email()])
+    email = StringField(
+        label='email',
+        validators=[Email()]
+    )
     submit = SubmitField(label='Log In')
 
 
@@ -36,12 +39,14 @@ class LoginForm(FlaskForm):
 @log_decorator
 def login():
     form = LoginForm()
-    if form.validate_on_submit():
-        if form.email.data == 'admin@email.com' and form.password.data == '12345678':
-            return render_template('success.html')
-        else:
-            return render_template('denied.html')
-    return render_template('login.html', form=form)
+    if request.method == "POST":
+        if form.validate_on_submit():
+            if form.email.data == 'admin@email.com' and form.password.data == '12345678':
+                return render_template('success.html')
+            else:
+                return render_template('denied.html')
+    else:
+        return render_template('login.html', form=form)
 
 
 if __name__ == '__main__':
