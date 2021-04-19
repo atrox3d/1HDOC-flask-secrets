@@ -4,6 +4,7 @@ from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, Length
+from flask_bootstrap import Bootstrap
 
 
 import util.logging
@@ -16,6 +17,7 @@ import logging
 logger = logging.getLogger(__name__)
 root = util.logging.get_root_logger()
 app = Flask(__name__)
+Bootstrap(app)
 app.secret_key = "what-the-fuck"
 
 
